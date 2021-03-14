@@ -1,5 +1,5 @@
 # SIDOO-zad1
-Software engineering project
+
 
 ## Wymagany
 - python 3
