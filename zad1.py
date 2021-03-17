@@ -1,10 +1,10 @@
 import tkinter as tk
 import numpy as np
-from math import sin, pow, sqrt
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from variants.bisection import bisection
+from utils.eval_math_fn import eval_math_fn
 
 
 def plot():
@@ -17,7 +17,7 @@ def plot():
 
     # calculate plot points
     arrayX = np.arange(interval_start, interval_end, 0.02)
-    arrayY = np.array(list(map(lambda x: eval(fun, {"x": x, 'sin': sin, 'sqrt': sqrt, 'pow': pow}), arrayX)))
+    arrayY = np.array(list(map(lambda x: eval_math_fn(fun, {"x": x}), arrayX)))
 
     # clear plot
     plot1.cla()
