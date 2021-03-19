@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from variants.bisection import bisection
+from variants.fibonacci import fibonacci
 from utils.eval_math_fn import eval_math_fn
 
 
@@ -23,7 +24,9 @@ def plot():
     plot1.cla()
 
     # bisection
-    bisection(plot1, fun, d, interval_start, interval_end, i)
+    # bisection(plot1, fun, d, interval_start, interval_end, i)
+
+    fibonacci(plot1, fun, d, interval_start, interval_end)
 
     # plotting the graph 
     plot1.plot(arrayX, arrayY)
