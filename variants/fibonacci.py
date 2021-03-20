@@ -1,9 +1,9 @@
 from utils.eval_math_fn import eval_math_fn
 from utils.nth_fibonacci_number import nth_fibonacci_number
+from utils.plot.marker import mark_interval, mark_point
 
 
 def get_n(b, a, E, n=2):
-    print(n, E, nth_fibonacci_number(n),(b - a) / E)
     if nth_fibonacci_number(n) > (b - a) / E:
         return n
     return get_n(b, a, E, n + 1)
@@ -23,6 +23,7 @@ def fibonacci(plot, fn, delta, a, b):
         k += 1
 
         n -= 1
+        mark_interval(plot, fn, a, b)
         if fc < fd:
             b = d
             d = c
@@ -36,4 +37,7 @@ def fibonacci(plot, fn, delta, a, b):
             d = a + nth_fibonacci_number(n - 1) / nth_fibonacci_number(n) * (b - a)
             fd = eval_math_fn(fn, {"x": d})
 
-    print(f'Wynik: min: {(a + b) / 2}, liczba iteracji: {k - 1}')
+    minimum = (a + b) / 2
+    mark_point(plot, fn, minimum)
+
+    print(f'Wynik: min: {minimum}, liczba iteracji: {k - 1}')
