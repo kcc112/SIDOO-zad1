@@ -3,12 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+
+from utils.method import Method
 from variants.bisection import bisection
 from variants.fibonacci import fibonacci
 from utils.eval_math_fn import eval_math_fn
 
 
-def plot():
+def plot(method):
     # get value from input
     interval_start = int(a.get())
     interval_end = int(b.get())
@@ -23,12 +25,12 @@ def plot():
     # clear plot
     plot1.cla()
 
-    # bisection
-    # bisection(plot1, fun, d, interval_start, interval_end, i)
+    if method == Method.BISECTION:
+        bisection(plot1, fun, d, interval_start, interval_end, i)
+    elif method == Method.FIBONACCI:
+        fibonacci(plot1, fun, d, interval_start, interval_end, i)
 
-    fibonacci(plot1, fun, d, interval_start, interval_end)
-
-    # plotting the graph 
+    # plotting the graph
     plot1.plot(arrayX, arrayY)
 
     canvas.draw()
@@ -36,11 +38,11 @@ def plot():
 
 # GUI SETUP
 
-# the main Tkinter window 
+# the main Tkinter window
 master = tk.Tk()
 
-# setting the title  
-master.title('Bisekcja')
+# setting the title
+master.title('Optymalizacja')
 
 # dimensions of the main window 
 master.geometry("700x700")
@@ -78,7 +80,13 @@ b.pack()
 iter_count.pack()
 iteration_count.pack()
 
-plot_button.pack()
+# method choice
+buttons = tk.Frame(master)
+bisection_button = tk.Button(buttons, command=lambda: plot(Method.BISECTION), height=2, width=10, text="Bisekcja").pack(
+    side=tk.LEFT)
+fibonacci_button = tk.Button(buttons, command=lambda: plot(Method.FIBONACCI), height=2, width=10,
+                             text="Fibonacci").pack(side=tk.LEFT)
+buttons.pack(pady=10)
 
 # PLOT SETUP
 

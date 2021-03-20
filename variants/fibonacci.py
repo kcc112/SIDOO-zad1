@@ -9,7 +9,7 @@ def get_n(b, a, E, n=2):
     return get_n(b, a, E, n + 1)
 
 
-def fibonacci(plot, fn, delta, a, b):
+def fibonacci(plot, fn, delta, a, b, iteration_count):
     n = get_n(b, a, delta)
     c = a + nth_fibonacci_number(n - 2) / nth_fibonacci_number(n) * (b - a)
     d = a + nth_fibonacci_number(n - 1) / nth_fibonacci_number(n) * (b - a)
@@ -18,12 +18,13 @@ def fibonacci(plot, fn, delta, a, b):
     fd = eval_math_fn(fn, {"x": d})
 
     k = 1
-    while n > 2:
-        print(f'Iteracja: {k}, n: {n}, a: {a}, b: {b}, c: {c}, d: {d}')
-        k += 1
-
-        n -= 1
+    while n > 2 and k <= iteration_count:
+        print(f'Przedział {k}: [{a}, {b}]')
         mark_interval(plot, fn, a, b)
+
+        k += 1
+        n -= 1
+
         if fc < fd:
             b = d
             d = c
