@@ -2,7 +2,8 @@ import tkinter as tk
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
 
 from utils.method import Method
 from variants.bisection import bisection
@@ -10,28 +11,29 @@ from variants.fibonacci import fibonacci
 from utils.eval_math_fn import eval_math_fn
 
 
-def plot(method):
-    # get value from input
-    interval_start = int(a.get())
-    interval_end = int(b.get())
+def calculate(method):
+    # get values from input
+    interval_start = float(interval_s.get())
+    interval_end = float(interval_e.get())
     fun = fn.get()
-    d = float(delta.get())
-    i = int(iteration_count.get())
+    eps = float(epsilon.get())
+    iter_c = int(iteration_count.get())
 
     # calculate plot points
-    arrayX = np.arange(interval_start, interval_end, 0.02)
-    arrayY = np.array(list(map(lambda x: eval_math_fn(fun, {"x": x}), arrayX)))
+    arrayX = np.arange(interval_start, interval_end + 1, 0.02)
+    arrayY = np.array(list(map(lambda x: eval_math_fn(fun, {'x': x}), arrayX)))
 
     # clear plot
-    plot1.cla()
+    plot.cla()
 
+    # choose method
     if method == Method.BISECTION:
-        bisection(plot1, fun, d, interval_start, interval_end, i)
+        bisection(plot, fun, eps, interval_start, interval_end, iter_c)
     elif method == Method.FIBONACCI:
-        fibonacci(plot1, fun, d, interval_start, interval_end, i)
+        fibonacci(plot, fun, eps, interval_start, interval_end, iter_c)
 
-    # plotting the graph
-    plot1.plot(arrayX, arrayY)
+    # plotting x and y axys
+    plot.plot(arrayX, arrayY)
 
     canvas.draw()
 
@@ -42,72 +44,69 @@ def plot(method):
 master = tk.Tk()
 
 # setting the title
-master.title('Optymalizacja')
+master.title('Optymalizacja bisekcja i Fibonacci')
 
-# dimensions of the main window 
-master.geometry("700x700")
+# dimensions of the main window
+master.geometry('800x800')
 
-# button that displays the plot 
-plot_button = tk.Button(master, command=plot, height=2, width=10, text="Rysuj")
+# labels
+fn_input_label = tk.Label(master, text='Funkcja')
+epsilon_label = tk.Label(master, text='Epsilon')
+beginning_of_interval = tk.Label(master, text='Początek przedziału')
+end_of_interval = tk.Label(master, text='Koniec przedziału')
+iter_count = tk.Label(master, text='Ilość iteracji')
 
-# Labels
-fn_input_label = tk.Label(master, text="Funkcja")
-delta_label = tk.Label(master, text="Dokładność")
-beginning_of_interval = tk.Label(master, text="Początek przedziału")
-end_of_interval = tk.Label(master, text="Koniec przedziału")
-iter_count = tk.Label(master, text="Ilość iteracji")
-
-# Entry list
+# entry list
 fn = tk.Entry(master)
-delta = tk.Entry(master)
-a = tk.Entry(master)
-b = tk.Entry(master)
+epsilon = tk.Entry(master)
+interval_s = tk.Entry(master)
+interval_e = tk.Entry(master)
 iteration_count = tk.Entry(master)
 
-# place in main window
+# place labels and entry in main window
 fn_input_label.pack()
 fn.pack()
 
-delta_label.pack()
-delta.pack()
+epsilon_label.pack()
+epsilon.pack()
 
 beginning_of_interval.pack()
-a.pack()
+interval_s.pack()
 
 end_of_interval.pack()
-b.pack()
+interval_e.pack()
 
 iter_count.pack()
 iteration_count.pack()
 
-# method choice
+# method choice buttons
 buttons = tk.Frame(master)
-bisection_button = tk.Button(buttons, command=lambda: plot(Method.BISECTION), height=2, width=10, text="Bisekcja").pack(
+tk.Button(buttons, command=lambda: calculate(Method.BISECTION), height=2, width=10, text='Bisekcja').pack(
     side=tk.LEFT)
-fibonacci_button = tk.Button(buttons, command=lambda: plot(Method.FIBONACCI), height=2, width=10,
-                             text="Fibonacci").pack(side=tk.LEFT)
+tk.Button(buttons, command=lambda: calculate(Method.FIBONACCI), height=2, width=10,
+          text='Fibonacci').pack(side=tk.LEFT)
 buttons.pack(pady=10)
 
 # PLOT SETUP
 
-# the figure that will contain the plot 
+# the figure that will contain the plot
 fig = Figure(figsize=(5, 4), dpi=100)
 
-# adding the subplot 
-plot1 = fig.add_subplot(111)
+# adding the subplot
+plot = fig.add_subplot(111)
 
-# creating the Tkinter canvas containing the Matplotlib figure 
+# creating the Tkinter canvas containing the Matplotlib figure
 canvas = FigureCanvasTkAgg(fig, master)
 canvas.draw()
 
-# placing the canvas on the Tkinter window 
+# placing the canvas on the Tkinter window
 canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-# creating the Matplotlib toolbar 
+# creating the Matplotlib toolbar
 toolbar = NavigationToolbar2Tk(canvas, master)
 toolbar.update()
 
-# placing the toolbar on the Tkinter window 
+# placing the toolbar on the Tkinter window
 canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
 # run the gui
