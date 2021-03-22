@@ -1,6 +1,5 @@
 import tkinter as tk
 import numpy as np
-import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
@@ -9,6 +8,9 @@ from utils.method import Method
 from variants.bisection import bisection
 from variants.fibonacci import fibonacci
 from utils.eval_math_fn import eval_math_fn
+from utils.plot.marker import mark_unimodal_interval
+from utils.is_unimodal import is_unimodal
+from utils.scipy_optimize import scipy_optimize
 
 
 def calculate(method):
@@ -20,17 +22,23 @@ def calculate(method):
     iter_c = int(iteration_count.get())
 
     # calculate plot points
-    arrayX = np.arange(interval_start, interval_end + 1, 0.02)
+    arrayX = np.arange(interval_start, interval_end + 1, 0.01)
     arrayY = np.array(list(map(lambda x: eval_math_fn(fun, {'x': x}), arrayX)))
 
     # clear plot
     plot.cla()
+
+    if is_unimodal(interval_start, interval_end, fun, 0.2):
+        mark_unimodal_interval(plot, fun, interval_start, interval_end)
 
     # choose method
     if method == Method.BISECTION:
         bisection(plot, fun, eps, interval_start, interval_end, iter_c)
     elif method == Method.FIBONACCI:
         fibonacci(plot, fun, eps, interval_start, interval_end, iter_c)
+
+    # optimize with scipy
+    scipy_optimize(fun, interval_start, interval_end, eps, iter_c)
 
     # plotting x and y axys
     plot.plot(arrayX, arrayY)
