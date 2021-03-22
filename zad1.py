@@ -31,14 +31,14 @@ def calculate(method):
     if is_unimodal(interval_start, interval_end, fun, 0.2):
         mark_unimodal_interval(plot, fun, interval_start, interval_end)
 
-    # choose method
-    if method == Method.BISECTION:
-        bisection(plot, fun, eps, interval_start, interval_end, iter_c)
-    elif method == Method.FIBONACCI:
-        fibonacci(plot, fun, eps, interval_start, interval_end, iter_c)
+        # choose method
+        if method == Method.BISECTION:
+            bisection(plot, fun, eps, interval_start, interval_end, iter_c)
+        elif method == Method.FIBONACCI:
+            fibonacci(plot, fun, eps, interval_start, interval_end, iter_c)
 
-    # optimize with scipy
-    scipy_optimize(fun, interval_start, interval_end, eps, iter_c)
+        # optimize with scipy
+        scipy_optimize(fun, interval_start, interval_end, eps, iter_c)
 
     # plotting x and y axys
     plot.plot(arrayX, arrayY)
