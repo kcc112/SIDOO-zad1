@@ -1,15 +1,11 @@
 from utils.eval_math_fn import eval_math_fn
-from utils.plot.marker import mark_interval, mark_point, mark_unimodal_interval
-from utils.is_unimodal import is_unimodal
+from utils.plot.marker import mark_interval, mark_point
 
 
 def bisection(plot, fn, epsilon, a, b, iter_count):
     interval_start = a
     interval_end = b
     x = 0
-
-    if is_unimodal(interval_start, interval_end, fn, 0.2):
-        mark_unimodal_interval(plot, fn, interval_start, interval_end)
 
     mark_interval(plot, fn, interval_start, interval_end)
 
