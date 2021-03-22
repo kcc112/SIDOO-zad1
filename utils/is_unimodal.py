@@ -16,9 +16,9 @@ def is_unimodal(interval_start, interval_end, fn, step):
 		print(
 			f'Funkcja nie jest unimodalna w przedziale [{interval_start}, {interval_end}]')
 
-		while not (eval_math_fn(fn, {'x': new_interval_start}) > eval_math_fn(fn, {'x': x})) and (eval_math_fn(fn, {'x': new_interval_end}) > eval_math_fn(fn, {'x': x})):
-			new_interval_start -= step
-			new_interval_end += step
+		# while not (eval_math_fn(fn, {'x': new_interval_start}) > eval_math_fn(fn, {'x': x})) and (eval_math_fn(fn, {'x': new_interval_end}) > eval_math_fn(fn, {'x': x})):
+		# 	new_interval_start -= step
+		# 	new_interval_end += step
 
 		print(
 			f'Funkcja jest unimodalna w przedziale [{new_interval_start}, {new_interval_end}]')
