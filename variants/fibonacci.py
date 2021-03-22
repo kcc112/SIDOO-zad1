@@ -3,10 +3,10 @@ from utils.nth_fibonacci_number import nth_fibonacci_number
 from utils.plot.marker import mark_interval, mark_point
 
 
-def get_n(b, a, E, n=2):
-    if nth_fibonacci_number(n) > (b - a) / E:
+def get_n(b, a, epsilon, n=2):
+    if nth_fibonacci_number(n) > (b - a) / epsilon:
         return n
-    return get_n(b, a, E, n + 1)
+    return get_n(b, a, epsilon, n + 1)
 
 
 def fibonacci(plot, fn, epsilon, a, b, iteration_count):
