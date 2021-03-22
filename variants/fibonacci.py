@@ -9,8 +9,8 @@ def get_n(b, a, E, n=2):
     return get_n(b, a, E, n + 1)
 
 
-def fibonacci(plot, fn, delta, a, b, iteration_count):
-    n = get_n(b, a, delta)
+def fibonacci(plot, fn, epsilon, a, b, iteration_count):
+    n = get_n(b, a, epsilon)
     c = a + nth_fibonacci_number(n - 2) / nth_fibonacci_number(n) * (b - a)
     d = a + nth_fibonacci_number(n - 1) / nth_fibonacci_number(n) * (b - a)
 
