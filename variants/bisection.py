@@ -5,6 +5,7 @@ from utils.plot.marker import mark_interval, mark_point
 def bisection(plot, fn, epsilon, a, b, iter_count):
     interval_start = a
     interval_end = b
+    xm = (interval_start + interval_end) / 2
 
     mark_interval(plot, fn, interval_start, interval_end)
 
@@ -12,7 +13,6 @@ def bisection(plot, fn, epsilon, a, b, iter_count):
         l = interval_end - interval_start
         x1 = interval_start + l / 4
         x2 = interval_end - l / 4
-        xm = (interval_start + interval_end) / 2
 
         vfx1 = eval_math_fn(fn, {'x': x1})
         vfx2 = eval_math_fn(fn, {'x': x2})
@@ -23,8 +23,10 @@ def bisection(plot, fn, epsilon, a, b, iter_count):
             break
         elif vfx1 < vfxm:
             interval_end = xm
+            xm = x1
         elif vfx2 < vfxm:
             interval_start = xm
+            xm = x2
         else:
             interval_start = x1
             interval_end = x2
